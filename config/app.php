@@ -163,6 +163,12 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
+         * Custom Service Providers...
+         */
+
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+
+        /*
          * Package Service Providers...
          */
 
