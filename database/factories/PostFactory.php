@@ -21,8 +21,15 @@ class PostFactory extends Factory
      */
     public function definition()
     {
+        $body = '';
+        for ($i = 0; $i < rand(3, 6); $i++) {
+            $body .= $this->faker->realText(rand(300, 900));
+            $body .= '<br><br>';
+        };
+
         return [
-            //
+            'title' => $this->faker->realText(50),
+            'body' => $body,
         ];
     }
 }

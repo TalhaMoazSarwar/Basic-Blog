@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::with('user')->orderBy('created_at', 'desc')->paginate(10);
+        return view('post.index', compact('posts'));
     }
 
     /**
@@ -24,7 +26,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('post.create');
     }
 
     /**
@@ -35,7 +37,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+        ]);
+
+        $post = Post::create($data);
+
+        return redirect()->route('post.show', ['post' => $post])->with('success', 'Post Successfully Created');
     }
 
     /**
@@ -46,7 +55,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('post.show', compact('post'));
     }
 
     /**
@@ -57,7 +66,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('post.edit');
     }
 
     /**
@@ -69,9 +78,16 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
-    }
+        $data = $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+        ]);
 
+        DB::table('post')->update($data);
+
+        return redirect()->route('post.show', ['post' => $post])->with('success', 'Post Successfully Updated');
+    }
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -80,6 +96,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        
+        return redirect()->route('post.index')->with('success', 'Post Successfully Deleted');
     }
 }
