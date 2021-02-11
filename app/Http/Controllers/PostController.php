@@ -4,10 +4,17 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\Models\Post;
+use Auth;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +33,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.create');
+        $post = new Post();
+        return view('post.create', compact('post'));
     }
 
     /**
@@ -42,7 +50,7 @@ class PostController extends Controller
             'body' => 'required',
         ]);
 
-        $post = Post::create($data);
+        $post = Auth::user()->posts()->create($data);
 
         return redirect()->route('post.show', ['post' => $post])->with('success', 'Post Successfully Created');
     }
@@ -66,7 +74,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('post.edit');
+        return view('post.edit', compact('post'));
     }
 
     /**
@@ -83,7 +91,7 @@ class PostController extends Controller
             'body' => 'required',
         ]);
 
-        DB::table('post')->update($data);
+        DB::table('posts')->update($data);
 
         return redirect()->route('post.show', ['post' => $post])->with('success', 'Post Successfully Updated');
     }
