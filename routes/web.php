@@ -18,4 +18,4 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 Route::get('/', [PageController::class, 'index']);
-Route::resource('/post', PostController::class);
+Route::resource('post', PostController::class);

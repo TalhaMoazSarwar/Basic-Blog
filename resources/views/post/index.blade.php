@@ -3,7 +3,14 @@
 @section('title', 'Posts');
 
 @section('content')
-    <h1 class="display-4">Posts</h1>
+    <div class="row align-items-center clearfix">
+        <div class="col-9">
+            <h1 class="display-4">Posts</h1>
+        </div>
+        <div class="col-3">
+            <a class="btn btn-lg btn-outline-success float-right" href="{{ route('post.create') }}">Create Post</a>
+        </div>
+    </div>
     <hr>
     @foreach ($posts as $post)
         <div class="card mb-2">

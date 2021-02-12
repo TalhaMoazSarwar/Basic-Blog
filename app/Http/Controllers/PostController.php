@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use App\Models\Post;
-use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -22,6 +21,7 @@ class PostController extends Controller
      */
     public function index()
     {
+
         $posts = Post::with('user')->orderBy('created_at', 'desc')->paginate(10);
         return view('post.index', compact('posts'));
     }
@@ -91,7 +91,7 @@ class PostController extends Controller
             'body' => 'required',
         ]);
 
-        DB::table('posts')->update($data);
+        $post->update($data);
 
         return redirect()->route('post.show', ['post' => $post])->with('success', 'Post Successfully Updated');
     }
