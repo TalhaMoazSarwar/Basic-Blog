@@ -45,10 +45,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'title' => 'required',
-            'body' => 'required',
-        ]);
+        $data = $this->validator($request);
 
         $post = Auth::user()->posts()->create($data);
 
@@ -86,10 +83,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $data = $request->validate([
-            'title' => 'required',
-            'body' => 'required',
-        ]);
+        $data = $this->validator($request);
 
         $post->update($data);
 
@@ -107,5 +101,12 @@ class PostController extends Controller
         $post->delete();
         
         return redirect()->route('post.index')->with('success', 'Post Successfully Deleted');
+    }
+
+    private function validator($request) {
+        return $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+        ]);
     }
 }
