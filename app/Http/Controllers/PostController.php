@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewPostEvent;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,6 +50,8 @@ class PostController extends Controller
 
         $post = Auth::user()->posts()->create($data);
 
+        event(new NewPostEvent($post));
+
         return redirect()->route('post.show', ['post' => $post])->with('success', 'Post Successfully Created');
     }
 
@@ -71,6 +74,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        if (Auth::id() != $post->user_id) {
+            return redirect()->route('post.index')->with('error', 'Unauthorized Access!');
+        }
         return view('post.edit', compact('post'));
     }
 
