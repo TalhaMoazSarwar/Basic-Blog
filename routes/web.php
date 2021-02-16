@@ -19,3 +19,4 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 Route::get('/', [PageController::class, 'index'])->name('page.index');
 Route::resource('post', PostController::class);
+Route::get('post/{post}/like', [PostController::class, 'like']);

@@ -115,4 +115,15 @@ class PostController extends Controller
             'body' => 'required',
         ]);
     }
+
+    public function like(Post $post) {
+        $is_liked = $post->likes()->where('user_id', Auth::id())->first();
+        if ($is_liked) {
+            $post->likes()->where('user_id', Auth::id())->first()->delete();
+        } else {
+            $post->likes()->create(['user_id', Auth::id()]);
+        }
+
+        dd($is_liked);
+    }
 }
