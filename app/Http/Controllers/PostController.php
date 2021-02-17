@@ -117,13 +117,88 @@ class PostController extends Controller
     }
 
     public function like(Post $post) {
-        $is_liked = $post->likes()->where('user_id', Auth::id())->first();
+        $is_liked = $post->likes()
+                    ->where([
+                        'user_id' => Auth::id(),
+                        'type' => true,
+                    ])
+                    ->first();
+
+        $is_disliked = $post->likes()
+                    ->where([
+                        'user_id' => Auth::id(),
+                        'type' => false,
+                    ])
+                    ->first();
+
         if (is_null($is_liked)) {
-            $post->likes()->create(['user_id' => Auth::id()]);
+            $post->likes()->create([
+                'user_id' => Auth::id(),
+                'type' => true,
+            ]);
+
+            if (!is_null($is_disliked)) {
+                $post->likes()
+                ->where([
+                    'user_id' => Auth::id(),
+                    'type' => false,
+                ])
+                ->first()
+                ->delete();
+            }
             return 'post liked';
         } else {
-            $post->likes()->where('user_id', Auth::id())->first()->delete();
+            $post->likes()
+                ->where([
+                    'user_id' => Auth::id(),
+                    'type' => true,
+                ])
+                ->first()
+                ->delete();
             return 'post like deleted';
+        }
+    }
+
+    public function dislike(Post $post) {
+        $is_liked = $post->likes()
+                    ->where([
+                        'user_id' => Auth::id(),
+                        'type' => true,
+                    ])
+                    ->first();
+
+        $is_disliked = $post->likes()
+                    ->where([
+                        'user_id' => Auth::id(),
+                        'type' => false,
+                    ])
+                    ->first();
+
+        if (is_null($is_disliked)) {
+            $post->likes()->create([
+                'user_id' => Auth::id(),
+                'type' => false,
+            ]);
+
+            if (!is_null($is_liked)) {
+                $post->likes()
+                ->where([
+                    'user_id' => Auth::id(),
+                    'type' => true,
+                ])
+                ->first()
+                ->delete();
+            }
+            return 'post disliked';
+        } else {
+            $post->likes()
+                ->where([
+                    'user_id' => Auth::id(),
+                    'type' => false,
+                ])
+                ->first()
+                ->delete();
+            return 'post dislike deleted';
         }
     }
 }
