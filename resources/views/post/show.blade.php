@@ -6,6 +6,14 @@
     @include('inc.post.breadcrumb')
     <div class="card">
         <div class="card-body">
+            <div class="likebox float-right">
+                <button type="button" class="btn btn-outline-success">
+                    <i class="far fa-thumbs-up fa-lg"></i> Like
+                </button>
+                <button type="button" class="btn btn-outline-danger">
+                    <i class="far fa-thumbs-down fa-lg"></i> Dislike
+                </button>
+            </div>
             <h3 class="card-title text-uppercase font-weight-bold">{{ $post->title }}</h3>
             <span class="card-subtitle text-muted">By <strong>{{ $post->user->name }}</strong> on <strong>{{ $post->created_at }}</strong></span>
             <hr>

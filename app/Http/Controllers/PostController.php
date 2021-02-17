@@ -118,12 +118,12 @@ class PostController extends Controller
 
     public function like(Post $post) {
         $is_liked = $post->likes()->where('user_id', Auth::id())->first();
-        if ($is_liked) {
-            $post->likes()->where('user_id', Auth::id())->first()->delete();
+        if (is_null($is_liked)) {
+            $post->likes()->create(['user_id' => Auth::id()]);
+            return 'post liked';
         } else {
-            $post->likes()->create(['user_id', Auth::id()]);
+            $post->likes()->where('user_id', Auth::id())->first()->delete();
+            return 'post like deleted';
         }
-
-        dd($is_liked);
     }
 }
