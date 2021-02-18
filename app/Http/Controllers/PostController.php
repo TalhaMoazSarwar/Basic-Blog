@@ -118,50 +118,10 @@ class PostController extends Controller
     }
 
     public function like(Post $post) {
-        if (Like::is_liked_or_disliked($post)) {
-            if (Like::is_liked($post)) {
-                $post->likes()
-                    ->where([
-                        'user_id' => Auth::id(),
-                        'type' => true,
-                    ])
-                    ->first()
-                    ->delete();
-                dd('Like Deleted');
-            } else {
-                Like::toggle_like($post);
-                dd('Like Toggled');
-            }
-        } else {
-            $post->likes()->create([
-                'user_id' => Auth::id(),
-                'type' => true,
-                ]);
-            }
-            dd('Like Added');
+        Like::like_or_dislike($post, true);
     }
-
+    
     public function dislike(Post $post) {
-        if (Like::is_liked_or_disliked($post)) {
-            if (Like::is_disliked($post)) {
-                $post->likes()
-                    ->where([
-                        'user_id' => Auth::id(),
-                        'type' => false,
-                    ])
-                    ->first()
-                    ->delete();
-                dd('Dislike Deleted');
-            } else {
-                Like::toggle_like($post);
-                dd('Dislike Toggled');
-            }
-        } else {
-            $post->likes()->create([
-                'user_id' => Auth::id(),
-                'type' => false,
-                ]);
-            }
-            dd('Dislike Added');
+        Like::like_or_dislike($post, false);
     }
 }

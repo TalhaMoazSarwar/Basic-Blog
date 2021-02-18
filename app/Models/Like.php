@@ -20,7 +20,7 @@ class Like extends Model
         return $this->belongsTo(User::class);
     }
 
-    public static function is_liked($model) {
+    private static function is_liked($model) {
         $is_liked = $model->likes()
                     ->where([
                         'user_id' => Auth::id(),
@@ -30,7 +30,7 @@ class Like extends Model
         return !is_null($is_liked);
     }
     
-    public static function is_disliked($model) {
+    private static function is_disliked($model) {
         $is_disliked = $model->likes()
                     ->where([
                         'user_id' => Auth::id(),
@@ -40,12 +40,12 @@ class Like extends Model
         return !is_null($is_disliked);
     }
 
-    public static function is_liked_or_disliked($model) {
-        return Like::is_liked($model) || Like::is_disliked($model);
+    private static function is_liked_or_disliked($model) {
+        return self::is_liked($model) || self::is_disliked($model);
     }
 
-    public static function toggle_like($model) {
-        if (Like::is_liked($model)) {
+    private static function toggle_like($model) {
+        if (self::is_liked($model)) {
             $model->likes()->update([
                 'type' => false
             ]);
@@ -54,5 +54,29 @@ class Like extends Model
                 'type' => true
             ]);
         }
+    }
+
+    public static function like_or_dislike($model, $type) {
+        if (self::is_liked_or_disliked($model)) {
+            if (self::is_liked($model) == $type) {
+                $model->likes()
+                    ->where([
+                        'user_id' => Auth::id(),
+                        'type' => $type,
+                    ])
+                    ->first()
+                    ->delete();
+                dd('Deleted');
+            } else {
+                self::toggle_like($model);
+                dd('Toggled');
+            }
+        } else {
+            $model->likes()->create([
+                'user_id' => Auth::id(),
+                'type' => $type,
+                ]);
+            }
+            dd('Added');
     }
 }
