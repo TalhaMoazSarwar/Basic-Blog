@@ -16133,10 +16133,10 @@ readers do not read off random characters that represent icons */
   font-weight: 400;
 }
 
-.likebox > button {
+.post-likebox > button {
   font-size: 0.8rem;
 }
 
-.likebox > button:first-child {
+.post-likebox > button:first-child {
   margin-right: 5px;
 }

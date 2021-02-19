@@ -66,10 +66,11 @@ class Like extends Model
                     ])
                     ->first()
                     ->delete();
-                dd('Deleted');
+
+                return 'deleted';
             } else {
                 self::toggle_like($model);
-                dd('Toggled');
+                return 'toggled';
             }
         } else {
             $model->likes()->create([
@@ -77,6 +78,6 @@ class Like extends Model
                 'type' => $type,
                 ]);
             }
-            dd('Added');
+            return 'added';
     }
 }

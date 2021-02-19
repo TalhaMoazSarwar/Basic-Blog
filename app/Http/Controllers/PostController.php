@@ -118,10 +118,10 @@ class PostController extends Controller
     }
 
     public function like(Post $post) {
-        Like::like_or_dislike($post, true);
+        return Like::like_or_dislike($post, true);
     }
     
     public function dislike(Post $post) {
-        Like::like_or_dislike($post, false);
+        return Like::like_or_dislike($post, false);
     }
 }
