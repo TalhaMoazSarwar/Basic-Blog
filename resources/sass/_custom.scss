@@ -5,3 +5,7 @@
 .post-likebox > button:first-child {
     margin-right: 5px;
 }
+
+.post-likebox > button:focus {
+    box-shadow: none;
+}

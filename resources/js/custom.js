@@ -9,14 +9,18 @@ postLike.onclick = function() {
             if (response.data == 'added') {
                 postLike.classList.remove('btn-outline-success');
                 postLike.classList.add('btn-success');
+                postLike.lastElementChild.textContent = "Liked";
             } else if (response.data == 'deleted') {
                 postLike.classList.remove('btn-success');
                 postLike.classList.add('btn-outline-success');
+                postLike.lastElementChild.textContent = "Like";
             } else if (response.data == 'toggled') {
                 postLike.classList.remove('btn-outline-success');
                 postLike.classList.add('btn-success');
                 postDislike.classList.remove('btn-danger');
                 postDislike.classList.add('btn-outline-danger');
+                postLike.lastElementChild.textContent = "Liked";
+                postDislike.lastElementChild.textContent = "Dislike"
             }
         })
         .catch(function (error) {
@@ -30,14 +34,18 @@ postDislike.onclick = function() {
             if (response.data == 'added') {
                 postDislike.classList.remove('btn-outline-danger');
                 postDislike.classList.add('btn-danger');
+                postDislike.lastElementChild.textContent = "Disliked"
             } else if (response.data == 'deleted') {
                 postDislike.classList.remove('btn-danger');
                 postDislike.classList.add('btn-outline-danger');
+                postDislike.lastElementChild.textContent = "Dislike"
             } else if (response.data == 'toggled') {
                 postDislike.classList.remove('btn-outline-danger');
                 postDislike.classList.add('btn-danger');
                 postLike.classList.remove('btn-success');
                 postLike.classList.add('btn-outline-success');
+                postDislike.lastElementChild.textContent = "Disliked"
+                postLike.lastElementChild.textContent = "Like";
             }
         })
         .catch(function (error) {

@@ -8,11 +8,11 @@
         <div class="card-body">
             @auth
                 <div class="post-likebox float-right">
-                    <button type="button" class="btn btn-outline-success" id="post-like">
-                        <i class="far fa-thumbs-up fa-lg"></i> Like
+                    <button type="button" class="btn {{ $like === 1 ? 'btn-success' : 'btn-outline-success' }}" id="post-like">
+                        <i class="far fa-thumbs-up fa-lg"></i> <span>{{ $like === 1 ? 'Liked' : 'Like' }}</span>
                     </button>
-                    <button type="button" class="btn btn-outline-danger"  id="post-dislike">
-                        <i class="far fa-thumbs-down fa-lg"></i> Dislike
+                    <button type="button" class="btn {{ $like === 0 ? 'btn-danger' : 'btn-outline-danger' }}"  id="post-dislike">
+                        <i class="far fa-thumbs-down fa-lg"></i> <span>{{ $like === 0 ? 'Disliked' : 'Dislike' }}</span>
                     </button>
                 </div>
             @endauth

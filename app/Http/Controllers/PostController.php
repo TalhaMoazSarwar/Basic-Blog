@@ -64,7 +64,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('post.show', compact('post'));
+        $like = $this->is_liked_or_disliked($post);
+        return view('post.show', compact('post', 'like'));
     }
 
     /**
@@ -123,5 +124,12 @@ class PostController extends Controller
     
     public function dislike(Post $post) {
         return Like::like_or_dislike($post, false);
+    }
+
+    private function is_liked_or_disliked($post) {
+        $like = $post->likes()->where('user_id', Auth::id())->first();
+        if (!is_null($like)) {
+            return $like->type;
+        }
     }
 }
