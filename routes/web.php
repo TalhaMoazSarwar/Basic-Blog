@@ -19,5 +19,6 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 Route::get('/', [PageController::class, 'index'])->name('page.index');
 Route::resource('post', PostController::class);
-Route::get('post/{post}/like', [PostController::class, 'like']);
-Route::get('post/{post}/dislike', [PostController::class, 'dislike']);
+Route::get('post/{post}/like', [PostController::class, 'like'])->name('post.like');
+Route::get('post/{post}/dislike', [PostController::class, 'dislike'])->name('post.dislike');
+Route::post('post/{post}/comment', [PostController::class, 'comment_store'])->name('post.comment.store');

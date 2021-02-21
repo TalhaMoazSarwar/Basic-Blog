@@ -65,7 +65,8 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $like = $this->is_liked_or_disliked($post);
-        return view('post.show', compact('post', 'like'));
+        $comments = $post->comments()->with('user')->orderBy('created_at', 'desc')->get();
+        return view('post.show', compact('post', 'like', 'comments'));
     }
 
     /**
@@ -131,5 +132,18 @@ class PostController extends Controller
         if (!is_null($like)) {
             return $like->type;
         }
+    }
+
+    public function comment_store(Request $request, Post $post) {
+        $request->validate([
+            'comment' => 'required',
+        ]);
+
+        $post->comments()->create([
+            'text' => $request->get('comment'),
+            'user_id' => Auth::id(),
+        ]);
+
+        return redirect()->route('post.show', ['post' => $post]);
     }
 }

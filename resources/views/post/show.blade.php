@@ -30,4 +30,6 @@
             @endif
         </div>
     </div>
+
+    @include('inc.post.comment')
 @endsection

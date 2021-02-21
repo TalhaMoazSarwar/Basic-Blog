@@ -16144,3 +16144,16 @@ readers do not read off random characters that represent icons */
 .post-likebox > button:focus {
   box-shadow: none;
 }
+
+.post-commentbox {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  background-color: #FFFFFF;
+  padding: 20px;
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+.post-commentbox .comment {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  margin-bottom: 10px;
+}
