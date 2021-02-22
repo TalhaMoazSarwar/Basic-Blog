@@ -17,18 +17,37 @@
         </div>
     </div>
     @foreach ($comments as $comment)
-        <div class="row">
-            <div class="col">
-                <div class="comment d-flex p-4">
-                    <div class="flex-shrink-1 mr-3 align-self-md-center">
-                        <img class="rounded-circle" src="https://img.favpng.com/21/10/23/computer-icons-avatar-social-media-blog-font-awesome-png-favpng-jKXEv9rWhum7VbNKDbcELd6Di_t.jpg" alt="Profile Picture" width="64" height="64">
-                    </div>
-                    <div class="ml-2 text-justify text-secondary">
-                        <h5 class="font-weight-bold">{{ $comment->user->name }}</h5>
-                        <span>{{ $comment->text }}</span>
-                    </div>
+        <div class="comment d-flex flex-column p-4">
+            <div class="comment-inner-wrapper d-flex flex-row">
+                <div class="flex-shrink-1align-self-md-center mr-4">
+                    <img class="rounded-circle" src="https://img.favpng.com/21/10/23/computer-icons-avatar-social-media-blog-font-awesome-png-favpng-jKXEv9rWhum7VbNKDbcELd6Di_t.jpg" alt="Profile Picture" width="64" height="64">
+                </div>
+                <div class="text-justify text-secondary">
+                    <h5 class="font-weight-bold">{{ $comment->user->name }}</h5>
+                    <span>{{ $comment->text }}</span>
                 </div>
             </div>
+
+            @if ($comment->replies->isNotEmpty())
+
+            <div class="my-2"></div>
+
+            @foreach ($comment->replies as $reply)
+                <div class="comment d-flex flex-column p-3">
+                    <div class="comment-inner-wrapper d-flex flex-row">
+                        <div class="flex-shrink-1align-self-md-center mr-4">
+                            <img class="rounded-circle" src="https://img.favpng.com/21/10/23/computer-icons-avatar-social-media-blog-font-awesome-png-favpng-jKXEv9rWhum7VbNKDbcELd6Di_t.jpg" alt="Profile Picture" width="64" height="64">
+                        </div>
+                        <div class="text-justify text-secondary">
+                            <h5 class="font-weight-bold">{{ $reply->user->name }}</h5>
+                            <span>{{ $reply->text }}</span>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+                
+            @endif
+
         </div>
     @endforeach
 </section>

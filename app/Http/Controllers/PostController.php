@@ -65,7 +65,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $like = $this->is_liked_or_disliked($post);
-        $comments = $post->comments()->with('user')->orderBy('created_at', 'desc')->get();
+        $comments = $post->comments()->with('user')->with('replies')->orderBy('created_at', 'desc')->get();
         return view('post.show', compact('post', 'like', 'comments'));
     }
 
