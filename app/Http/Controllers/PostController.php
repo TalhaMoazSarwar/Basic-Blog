@@ -133,17 +133,4 @@ class PostController extends Controller
             return $like->type;
         }
     }
-
-    public function comment_store(Request $request, Post $post) {
-        $request->validate([
-            'comment' => 'required',
-        ]);
-
-        $post->comments()->create([
-            'text' => $request->get('comment'),
-            'user_id' => Auth::id(),
-        ]);
-
-        return redirect()->route('post.show', ['post' => $post]);
-    }
 }

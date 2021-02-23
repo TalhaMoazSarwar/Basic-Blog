@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 Route::get('/', [PageController::class, 'index'])->name('page.index');
 Route::resource('post', PostController::class);
-Route::get('post/{post}/like', [PostController::class, 'like'])->name('post.like');
-Route::get('post/{post}/dislike', [PostController::class, 'dislike'])->name('post.dislike');
-Route::post('post/{post}/comment', [PostController::class, 'comment_store'])->name('post.comment.store');
+Route::post('post/{post}/like', [PostController::class, 'like'])->name('post.like');
+Route::post('post/{post}/dislike', [PostController::class, 'dislike'])->name('post.dislike');
+Route::post('post/{post}/comment', [CommentController::class, 'store'])->name('comment.store');
+Route::post('comment/{comment}/like', [CommentController::class, 'like'])->name('comment.like');
+Route::post('comment/{comment}/dislike', [CommentController::class, 'dislike'])->name('comment.dislike');

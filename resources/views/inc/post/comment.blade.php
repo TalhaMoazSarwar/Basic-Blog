@@ -1,3 +1,12 @@
+@php
+    function is_liked_or_disliked($comment) {
+        $like = $comment->likes()->where('user_id', Auth::id())->first();
+        if (!is_null($like)) {
+            return $like->type;
+        }
+    }
+@endphp
+
 <section class="post-commentbox">
     @if ( auth()->check() || $comments->isNotEmpty() )
         <h1 class="mb-5 font-weight-bold">Comments</h1>
@@ -9,7 +18,7 @@
                     <h6>Write your comment</h6>
                     <div class="row">
                         <div class="col">
-                            <form action="{{ route('post.comment.store', ['post' => $post]) }}" method="post">
+                            <form action="{{ route('comment.store', ['post' => $post]) }}" method="post">
                                 @csrf
                                 <textarea class="form-control" name="comment" id="comment"></textarea>
                                 <button type="submit" class="btn btn-outline-primary mt-3">Create Comment</button>
@@ -30,9 +39,9 @@
                     <h5 class="font-weight-bold d-inline">{{ $comment->user->name }}</h5>
                     <small class="text-muted"> ({{ $comment->age }})</small>
                     <span class="d-block mt-1">{{ $comment->text }}</span>
-                    <div class="comment-actionbox small mt-1">
-                        <a>Like</a>
-                        <a class="mx-3">Dislike</a>
+                    <div class="comment-actionbox small mt-1" data-comment-id="{{ $comment->id }}">
+                        <a class="comment-like">{{ is_liked_or_disliked($comment) === 1 ? 'Liked' : 'Like' }}</a>
+                        <a class="comment-dislike mx-3">{{ is_liked_or_disliked($comment) === 0 ? 'Disliked' : 'Dislike' }}</a>
                         <a>Reply</a>
                     </div>
                 </div>

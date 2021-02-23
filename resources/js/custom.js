@@ -3,18 +3,18 @@
 let postLike = document.getElementById('post-like');
 let postDislike = document.getElementById('post-dislike');
 
-function is_liked(e) {
+function is_liked(el) {
     // return e.classList.contains('btn-success');
-    return e.textContent.trim() == "Liked";
+    return el.textContent.trim() == "Liked";
 }
 
-function is_disliked(e) {
+function is_disliked(el) {
     // return e.classList.contains('btn-danger');
-    return e.textContent.trim() == "Disliked";
+    return el.textContent.trim() == "Disliked";
 }
 
-function is_liked_or_disliked(e1, e2) {
-    return is_liked(e1) || is_disliked(e2);
+function is_liked_or_disliked(el1, el2) {
+    return is_liked(el1) || is_disliked(el2);
 }
 
 postLike.onclick = function() {
@@ -38,7 +38,7 @@ postLike.onclick = function() {
         postLike.lastElementChild.textContent = "Liked";
     }
 
-    axios.get(window.location.href + '/like')
+    axios.post(window.location.href + '/like')
         .then(function (response) {
             console.log(response.data);
         })
@@ -68,7 +68,7 @@ postDislike.onclick = function() {
         postDislike.lastElementChild.textContent = "Disliked"
     }
 
-    axios.get(window.location.href + '/dislike')
+    axios.post(window.location.href + '/dislike')
         .then(function (response) {
             console.log(response.data);
         })
@@ -76,3 +76,62 @@ postDislike.onclick = function() {
             console.error(error);
         })
 }
+
+let commentLikes = document.getElementsByClassName('comment-like');
+let commentDislikes = document.getElementsByClassName('comment-dislike');
+
+Array.from(commentLikes).forEach(function (el) {
+    el.addEventListener('click', function(event) {
+        let like = event.target;
+        let dislike = event.target.nextElementSibling;
+        let commentID = like.parentElement.getAttribute('data-comment-id');
+
+        if ( is_liked_or_disliked(like, dislike) ) {
+            if ( is_liked(like) ) {
+                like.textContent = "Like";
+            } else {
+                like.textContent = "Liked";
+                dislike.textContent = "Dislike"
+            }
+        } else {
+            like.textContent = "Liked";
+        }
+
+        axios.post('/comment/'+commentID+'/like')
+            .then(function (response) {
+                console.log(response.data);
+            })
+            .catch(function (error) {
+                console.error(error);
+            })
+
+    })
+});
+
+Array.from(commentDislikes).forEach(function (el) {
+    el.addEventListener('click', function(event) {
+        let dislike = event.target;
+        let like = event.target.previousElementSibling;
+        let commentID = dislike.parentElement.getAttribute('data-comment-id');
+
+        if ( is_liked_or_disliked(like, dislike) ) {
+            if ( is_disliked(dislike) ) {
+                dislike.textContent = "Dislike";
+            } else {
+                dislike.textContent = "Disliked";
+                like.textContent = "Like"
+            }
+        } else {
+            dislike.textContent = "Disliked";
+        }
+
+        axios.post('/comment/'+commentID+'/dislike')
+            .then(function (response) {
+                console.log(response.data);
+            })
+            .catch(function (error) {
+                console.error(error);
+            })
+
+    })
+});

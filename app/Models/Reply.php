@@ -22,4 +22,8 @@ class Reply extends Model
     public function getAgeAttribute() {
         return $this->created_at->diffForHumans();
     }
+
+    public function likes() {
+        return $this->morphMany(Like::class, 'likeable');
+    }
 }
