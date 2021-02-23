@@ -11,4 +11,8 @@
         @include('inc.post.form')
         <button class="btn btn-outline-success mt-3" type="submit">Update Post</button>
     </form>
+
+    <script>
+        CKEDITOR.replace( 'body' );
+    </script>
 @endsection

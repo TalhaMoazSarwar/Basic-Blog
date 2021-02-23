@@ -19,7 +19,7 @@
             <h3 class="card-title text-uppercase font-weight-bold">{{ $post->title }}</h3>
             <span class="card-subtitle text-muted">By <strong>{{ $post->user->name }}</strong> on <strong>{{ $post->created_at }}</strong></span>
             <hr>
-            <p class="card-text lead text-secondary">{!! $post->body !!}</p>
+            <span class="card-text lead text-secondary">{!! $post->body !!}</span>
             @if (Auth::id() == $post->user_id)
                 <form class="float-right" action="{{ route('post.destroy', ['post' => $post]) }}" method="post">
                     @csrf

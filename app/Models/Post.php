@@ -22,4 +22,8 @@ class Post extends Model
     public function comments() {
         return $this->morphMany(Comment::class, 'commentable');
     }
+
+    public function getAgeAttribute() {
+        return $this->created_at->diffForHumans();
+    }
 }

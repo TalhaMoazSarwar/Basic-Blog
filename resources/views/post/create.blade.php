@@ -10,4 +10,8 @@
         @include('inc.post.form')
         <button class="btn btn-outline-success mt-3" type="submit">Create Post</button>
     </form>
+
+    <script>
+        CKEDITOR.replace( 'body' );
+    </script>
 @endsection
