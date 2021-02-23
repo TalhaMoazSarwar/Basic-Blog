@@ -1,5 +1,7 @@
 <section class="post-commentbox">
-    <h1 class="mb-5 font-weight-bold">Comments</h1>
+    @if ( auth()->check() || $comments->isNotEmpty() )
+        <h1 class="mb-5 font-weight-bold">Comments</h1>
+    @endif
     @auth      
         <div class="row">
             <div class="col">
@@ -28,6 +30,11 @@
                     <h5 class="font-weight-bold d-inline">{{ $comment->user->name }}</h5>
                     <small class="text-muted"> ({{ $comment->age }})</small>
                     <span class="d-block mt-1">{{ $comment->text }}</span>
+                    <div class="comment-actionbox small mt-1">
+                        <a>Like</a>
+                        <a class="mx-3">Dislike</a>
+                        <a>Reply</a>
+                    </div>
                 </div>
             </div>
 
@@ -45,6 +52,10 @@
                             <h5 class="font-weight-bold d-inline">{{ $reply->user->name }}</h5>
                             <small class="text-muted"> ({{ $reply->age }})</small>
                             <span class="d-block mt-1">{{ $reply->text }}</span>
+                            <div class="comment-actionbox small mt-1">
+                                <a>Like</a>
+                                <a class="ml-3">Dislike</a>
+                            </div>
                         </div>
                     </div>
                 </div>

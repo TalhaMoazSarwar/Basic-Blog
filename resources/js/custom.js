@@ -1,30 +1,26 @@
-// Like and Dislike Functionality
+// Post Like and Dislike Functionality
 
 let postLike = document.getElementById('post-like');
 let postDislike = document.getElementById('post-dislike');
 
-function is_liked() {
-    return postLike.classList.contains('btn-success');
+function is_liked(e) {
+    // return e.classList.contains('btn-success');
+    return e.textContent.trim() == "Liked";
 }
 
-function is_disliked() {
-    return postDislike.classList.contains('btn-danger');
+function is_disliked(e) {
+    // return e.classList.contains('btn-danger');
+    return e.textContent.trim() == "Disliked";
 }
 
-function is_liked_or_disliked() {
-    return is_liked() || is_disliked();
-}
-
-function toggle_like() {
-    if ( is_liked() ) {
-        
-    }
+function is_liked_or_disliked(e1, e2) {
+    return is_liked(e1) || is_disliked(e2);
 }
 
 postLike.onclick = function() {
     
-    if ( is_liked_or_disliked() ) {
-        if ( is_liked() ) {
+    if ( is_liked_or_disliked(postLike, postDislike) ) {
+        if ( is_liked(postLike) ) {
             postLike.classList.remove('btn-success');
             postLike.classList.add('btn-outline-success');
             postLike.lastElementChild.textContent = "Like";
@@ -53,8 +49,8 @@ postLike.onclick = function() {
 
 postDislike.onclick = function() {
     
-    if ( is_liked_or_disliked() ) {
-        if ( is_disliked() ) {
+    if ( is_liked_or_disliked(postLike, postDislike) ) {
+        if ( is_disliked(postDislike) ) {
             postDislike.classList.remove('btn-danger');
             postDislike.classList.add('btn-outline-danger');
             postDislike.lastElementChild.textContent = "Dislike";
