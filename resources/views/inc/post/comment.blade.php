@@ -39,11 +39,13 @@
                     <h5 class="font-weight-bold d-inline">{{ $comment->user->name }}</h5>
                     <small class="text-muted"> ({{ $comment->age }})</small>
                     <span class="d-block mt-1">{{ $comment->text }}</span>
-                    <div class="comment-actionbox small mt-1" data-comment-id="{{ $comment->id }}">
-                        <a class="comment-like">{{ is_liked_or_disliked($comment) === 1 ? 'Liked' : 'Like' }}</a>
-                        <a class="comment-dislike mx-3">{{ is_liked_or_disliked($comment) === 0 ? 'Disliked' : 'Dislike' }}</a>
-                        <a>Reply</a>
-                    </div>
+                    @auth
+                        <div class="comment-actionbox small mt-1" data-comment-id="{{ $comment->id }}">
+                            <a class="comment-like">{{ is_liked_or_disliked($comment) === 1 ? 'Liked' : 'Like' }}</a>
+                            <a class="comment-dislike mx-3">{{ is_liked_or_disliked($comment) === 0 ? 'Disliked' : 'Dislike' }}</a>
+                            <a>Reply</a>
+                        </div>
+                    @endauth
                 </div>
             </div>
 
@@ -61,10 +63,12 @@
                             <h5 class="font-weight-bold d-inline">{{ $reply->user->name }}</h5>
                             <small class="text-muted"> ({{ $reply->age }})</small>
                             <span class="d-block mt-1">{{ $reply->text }}</span>
-                            <div class="comment-actionbox small mt-1">
-                                <a>Like</a>
-                                <a class="ml-3">Dislike</a>
-                            </div>
+                            @auth
+                                <div class="comment-actionbox small mt-1">
+                                    <a>Like</a>
+                                    <a class="ml-3">Dislike</a>
+                                </div>
+                            @endauth
                         </div>
                     </div>
                 </div>
