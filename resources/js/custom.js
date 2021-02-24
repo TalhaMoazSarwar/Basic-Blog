@@ -5,16 +5,26 @@ let postDislike = document.getElementById('post-dislike');
 
 function is_liked(el) {
     // return e.classList.contains('btn-success');
-    return el.textContent.trim() == "Liked";
+    return el.text().trim() == "Liked";
 }
 
 function is_disliked(el) {
     // return e.classList.contains('btn-danger');
-    return el.textContent.trim() == "Disliked";
+    return el.text().trim() == "Disliked";
 }
 
 function is_liked_or_disliked(el1, el2) {
     return is_liked(el1) || is_disliked(el2);
+}
+
+function toggle_like(like, dislike) {
+    if (is_liked(like)) {
+        like.text('Like');
+        dislike.text('Disliked');
+    } else {
+        like.text('Liked');
+        dislike.text('Dislike');
+    }
 }
 
 if (!!postLike || !!postDislike) {
@@ -81,65 +91,48 @@ if (!!postLike || !!postDislike) {
 
 }
 
-let commentLikes = document.getElementsByClassName('comment-like');
-let commentDislikes = document.getElementsByClassName('comment-dislike');
+function do_like_dislike(like, dislike, actionType) {
 
-if (!!commentLikes) {
-
-    Array.from(commentLikes).forEach(function (el) {
-        el.addEventListener('click', function(event) {
-            let like = event.target;
-            let dislike = event.target.nextElementSibling;
-            let commentID = like.parentElement.getAttribute('data-comment-id');
-
-            if ( is_liked_or_disliked(like, dislike) ) {
-                if ( is_liked(like) ) {
-                    like.textContent = "Like";
-                } else {
-                    like.textContent = "Liked";
-                    dislike.textContent = "Dislike"
-                }
-            } else {
-                like.textContent = "Liked";
-            }
-
-            axios.post('/comment/'+commentID+'/like')
-                .then(function (response) {
-                    console.log(response.data);
-                })
-                .catch(function (error) {
-                    console.error(error);
-                })
-
-        })
-    });
-
-    Array.from(commentDislikes).forEach(function (el) {
-        el.addEventListener('click', function(event) {
-            let dislike = event.target;
-            let like = event.target.previousElementSibling;
-            let commentID = dislike.parentElement.getAttribute('data-comment-id');
-
-            if ( is_liked_or_disliked(like, dislike) ) {
-                if ( is_disliked(dislike) ) {
-                    dislike.textContent = "Dislike";
-                } else {
-                    dislike.textContent = "Disliked";
-                    like.textContent = "Like"
-                }
-            } else {
-                dislike.textContent = "Disliked";
-            }
-
-            axios.post('/comment/'+commentID+'/dislike')
-                .then(function (response) {
-                    console.log(response.data);
-                })
-                .catch(function (error) {
-                    console.error(error);
-                })
-
-        })
-    });
-
+    if ( is_liked_or_disliked(like, dislike) ) {
+        if ( is_liked(like) == actionType ) {
+            actionType ? like.text('Like') : dislike.text('Dislike');
+        } else {
+            toggle_like(like, dislike);
+        }
+    } else {
+        actionType ? like.text('Liked') : dislike.text('Disliked');
+    }
 }
+
+$('.comment-actionbox').on('click', 'a', function(e) {
+    let commentID = $(this).parent().attr('data-comment-id');
+    if ( $(this).hasClass('comment-like') ) {
+
+        let like = $(this);
+        let dislike = $(this).next();
+        do_like_dislike(like, dislike, true);
+
+        axios.post('/comment/' + commentID + '/like')
+            .then(function (response) {
+                console.log(response.data);
+            })
+            .catch(function (error) {
+                console.error(error);
+            })
+
+    } else if ( $(this).hasClass('comment-dislike') ) {
+
+        let dislike = $(this);
+        let like = $(this).prev();  
+        do_like_dislike(like, dislike, false);
+
+        axios.post('/comment/' + commentID + '/dislike')
+            .then(function (response) {
+                console.log(response.data);
+            })
+            .catch(function (error) {
+                console.error(error);
+            })
+
+    }
+});
