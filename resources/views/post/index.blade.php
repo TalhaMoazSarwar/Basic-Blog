@@ -18,7 +18,7 @@
         <div class="card mb-2">
             <div class="card-body">
                 <h4 class="text-uppercase"><a class="text-decoration-none text-reset" href="{{ route('post.show', ['post' => $post]) }}">{{ $post->title }}</a></h4>
-                <span style="font-size: 0.85rem" class="text-secondary text-uppercase">By <strong>{{ $post->user->name }}</strong> on <strong>{{ $post->created_at }}</strong></span>
+                <span style="font-size: 0.85rem" class="text-secondary text-uppercase">By <span class="post-author-active">{{ $post->user->name }}</span> on {{ $post->created_at->toFormattedDateString() }}</span>
             </div>
         </div>
     @endforeach

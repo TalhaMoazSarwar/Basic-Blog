@@ -17,7 +17,7 @@
                 </div>
             @endauth
             <h3 class="card-title text-uppercase font-weight-bold">{{ $post->title }}</h3>
-            <span class="card-subtitle text-muted">By <strong>{{ $post->user->name }}</strong> on <strong>{{ $post->created_at }}</strong></span>
+            <span class="card-subtitle text-muted">By <span class="post-author-active">{{ $post->user->name }}</span> on {{ $post->created_at->toFormattedDateString() }}</span>
             <hr>
             <span class="card-text lead text-secondary">{!! $post->body !!}</span>
             @if (Auth::id() == $post->user_id)
