@@ -34,12 +34,16 @@ function do_like_dislike(like, dislike, model, likeableID, actionType) {
                 if (model == 'post') {
                     like.removeClass('btn-success');
                     like.addClass('btn-outline-success');
+                } else {
+                    like.removeClass('text-primary');
                 }
                 like.find('span').text('Like');
             } else {
                 if (model == 'post') {
                     dislike.removeClass('btn-danger');
                     dislike.addClass('btn-outline-danger');
+                } else {
+                    dislike.removeClass('text-primary');
                 }
                 dislike.find('span').text('Dislike');
             }
@@ -56,6 +60,14 @@ function do_like_dislike(like, dislike, model, likeableID, actionType) {
                     dislike.removeClass('btn-danger');
                     dislike.addClass('btn-outline-danger');
                 }
+            } else {
+                if ( liked ) {
+                    like.removeClass('text-primary');
+                    dislike.addClass('text-primary');
+                } else {
+                    like.addClass('text-primary');
+                    dislike.removeClass('text-primary');
+                }
             }
             toggle_like(like, dislike);
         }
@@ -64,12 +76,16 @@ function do_like_dislike(like, dislike, model, likeableID, actionType) {
             if (model == 'post') {
                 like.addClass('btn-success');
                 like.removeClass('btn-outline-success');
+            } else {
+                like.addClass('text-primary');
             }
             like.find('span').text('Liked');
         } else {
             if (model == 'post') {
                 dislike.addClass('btn-danger');
                 dislike.removeClass('btn-outline-danger');
+            } else {
+                dislike.addClass('text-primary');
             }
             dislike.find('span').text('Disliked');
         }

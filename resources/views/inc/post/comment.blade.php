@@ -41,8 +41,8 @@
                     <span class="d-block mt-1">{{ $comment->text }}</span>
                     @auth
                         <div class="comment-actionbox small mt-1" data-comment-id="{{ $comment->id }}">
-                            <a class="comment-like"><span>{{ is_liked_or_disliked($comment) === 1 ? 'Liked' : 'Like' }}</span></a>
-                            <a class="comment-dislike mx-3"><span>{{ is_liked_or_disliked($comment) === 0 ? 'Disliked' : 'Dislike' }}</span></a>
+                            <a class="comment-like {{ is_liked_or_disliked($comment) === 1 ? 'text-primary' : '' }}"><span>{{ is_liked_or_disliked($comment) === 1 ? 'Liked' : 'Like' }}</span></a>
+                            <a class="comment-dislike mx-3 {{ is_liked_or_disliked($comment) === 0 ? 'text-primary' : '' }}"><span>{{ is_liked_or_disliked($comment) === 0 ? 'Disliked' : 'Dislike' }}</span></a>
                             <a>Reply</a>
                         </div>
                     @endauth
