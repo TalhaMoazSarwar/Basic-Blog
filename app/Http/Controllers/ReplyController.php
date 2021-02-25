@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
+use App\Models\Reply;
 use Auth;
 use Illuminate\Http\Request;
 
-class CommentController extends Controller
+class ReplyController extends Controller
 {
     /**
      * Store a newly created resource in storage.
@@ -34,10 +34,10 @@ class CommentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\Reply  $reply
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comment $comment)
+    public function update(Request $request, Reply $reply)
     {
         //
     }
@@ -45,19 +45,19 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\Reply  $reply
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy(Reply $reply)
     {
         //
     }
 
-    public function like(Comment $comment) {
-        return Like::like_or_dislike($comment, true);
+    public function like(Reply $reply) {
+        return Like::like_or_dislike($reply, true);
     }
     
-    public function dislike(Comment $comment) {
-        return Like::like_or_dislike($comment, false);
+    public function dislike(Reply $reply) {
+        return Like::like_or_dislike($reply, false);
     }
 }

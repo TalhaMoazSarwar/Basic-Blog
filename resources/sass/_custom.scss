@@ -23,13 +23,15 @@
     margin-bottom: 10px;
 }
 
-.comment-actionbox > a {
+.comment-actionbox > a,
+.reply-actionbox > a {
     cursor: pointer;
     text-decoration: none;
     color: inherit;
     font-size: 0.9rem;
 }
 
-.comment-actionbox > a:hover {
+.comment-actionbox > a:hover,
+.reply-actionbox > a:hover {
     text-decoration: underline !important;
 }

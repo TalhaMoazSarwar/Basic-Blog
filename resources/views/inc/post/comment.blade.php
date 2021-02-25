@@ -64,9 +64,9 @@
                             <small class="text-muted"> ({{ $reply->age }})</small>
                             <span class="d-block mt-1">{{ $reply->text }}</span>
                             @auth
-                                <div class="comment-actionbox small mt-1">
-                                    <a><span>Like</span></a>
-                                    <a class="ml-3"><span>Dislike</span></a>
+                                <div class="reply-actionbox small mt-1" data-reply-id="{{ $reply->id }}">
+                                    <a class="reply-like {{ is_liked_or_disliked($reply) === 1 ? 'text-primary' : '' }}"><span>Like</span></a>
+                                    <a class="reply-dislike ml-3 {{ is_liked_or_disliked($reply) === 0 ? 'text-primary' : '' }}"><span>Dislike</span></a>
                                 </div>
                             @endauth
                         </div>

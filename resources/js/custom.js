@@ -1,7 +1,4 @@
-// Post Like and Dislike Functionality
-
-let postLike = document.getElementById('post-like');
-let postDislike = document.getElementById('post-dislike');
+// Like/Dislike Supportive Functions
 
 function is_liked(el) {
     return el.text().trim() == "Liked";
@@ -24,6 +21,8 @@ function toggle_like(like, dislike, isPost) {
         dislike.find('span').text('Dislike');
     }
 }
+
+// Like/Dislike Global Function
 
 function do_like_dislike(like, dislike, model, likeableID, actionType) {
 
@@ -100,6 +99,8 @@ function do_like_dislike(like, dislike, model, likeableID, actionType) {
         })
 }
 
+// Post Like/Dislike Functionality
+
 $('.post-likebox').on('click', 'button', function(e) {
     let postID = $(this).parent().attr('data-post-id');
     if ( $(this).hasClass('post-like') ) {
@@ -117,6 +118,8 @@ $('.post-likebox').on('click', 'button', function(e) {
     }
 });
 
+// Comment Like/Dislike Functionality
+
 $('.comment-actionbox').on('click', 'a', function(e) {
     let commentID = $(this).parent().attr('data-comment-id');
     if ( $(this).hasClass('comment-like') ) {
@@ -130,6 +133,25 @@ $('.comment-actionbox').on('click', 'a', function(e) {
         let dislike = $(this);
         let like = $(this).prev();  
         do_like_dislike(like, dislike, 'comment', commentID, false);
+
+    }
+});
+
+// Reply Like/Dislike Functionality
+
+$('.reply-actionbox').on('click', 'a', function(e) {
+    let commentID = $(this).parent().attr('data-reply-id');
+    if ( $(this).hasClass('reply-like') ) {
+
+        let like = $(this);
+        let dislike = $(this).next();
+        do_like_dislike(like, dislike, 'reply', commentID, true);
+
+    } else if ( $(this).hasClass('reply-dislike') ) {
+
+        let dislike = $(this);
+        let like = $(this).prev();  
+        do_like_dislike(like, dislike, 'reply', commentID, false);
 
     }
 });
