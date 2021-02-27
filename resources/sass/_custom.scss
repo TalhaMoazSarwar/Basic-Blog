@@ -1,3 +1,5 @@
+// Post Like Box
+
 .post-likebox > button {
     font-size: 0.8rem;
 }
@@ -10,7 +12,11 @@
     box-shadow: none;
 }
 
+// Post Comment Box
+
 .post-commentbox {
+    display: flex;
+    flex-direction: column;
     border: 1px solid rgba(0, 0, 0, 0.125);
     background-color: #FFFFFF;
     padding: 20px;
@@ -18,10 +24,21 @@
     font-size: 1rem;
 }
 
-.post-commentbox .comment {
+// Comment Reply Box
+
+.post-commentbox .comment .reply {
+    display: none;
+}
+
+// Comment/Reply Border
+
+.post-commentbox .comment,
+.post-commentbox .reply {
     border: 1px solid rgba(0, 0, 0, 0.125);
     margin-bottom: 10px;
 }
+
+// Comment/Reply Action Box
 
 .comment-actionbox > a,
 .reply-actionbox > a {
@@ -35,6 +52,8 @@
 .reply-actionbox > a:hover {
     text-decoration: underline !important;
 }
+
+// Highlight Text
 
 .post-author-active {
     text-shadow: 0px 0px 1px #5e666d73;

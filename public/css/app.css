@@ -16146,6 +16146,8 @@ readers do not read off random characters that represent icons */
 }
 
 .post-commentbox {
+  display: flex;
+  flex-direction: column;
   border: 1px solid rgba(0, 0, 0, 0.125);
   background-color: #FFFFFF;
   padding: 20px;
@@ -16153,7 +16155,12 @@ readers do not read off random characters that represent icons */
   font-size: 1rem;
 }
 
-.post-commentbox .comment {
+.post-commentbox .comment .reply {
+  display: none;
+}
+
+.post-commentbox .comment,
+.post-commentbox .reply {
   border: 1px solid rgba(0, 0, 0, 0.125);
   margin-bottom: 10px;
 }

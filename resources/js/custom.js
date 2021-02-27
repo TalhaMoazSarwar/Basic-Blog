@@ -12,7 +12,7 @@ function is_liked_or_disliked(el1, el2) {
     return is_liked(el1) || is_disliked(el2);
 }
 
-function toggle_like(like, dislike, isPost) {
+function tggle_lioke(like, dislike, isPost) {
     if (is_liked(like)) {
         like.find('span').text('Like');
         dislike.find('span').text('Disliked');
@@ -133,6 +133,10 @@ $('.comment-actionbox').on('click', 'a', function(e) {
         let dislike = $(this);
         let like = $(this).prev();  
         do_like_dislike(like, dislike, 'comment', commentID, false);
+
+    } else if ( $(this).hasClass('comment-reply') ) {
+
+        $(this).closest('.comment').children('.reply').fadeIn('slow');
 
     }
 });
