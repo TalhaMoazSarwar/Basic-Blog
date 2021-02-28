@@ -136,7 +136,7 @@ $('.comment-actionbox').on('click', 'a', function(e) {
 
     } else if ( $(this).hasClass('comment-reply') ) {
 
-        $(this).closest('.comment').children('.reply').fadeIn('slow');
+        $(this).closest('.comment').children('.reply-box').fadeToggle('slow');
 
     }
 });

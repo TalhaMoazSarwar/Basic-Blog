@@ -42,19 +42,23 @@
                     @endauth
                 </div>
             </div>
-            {{-- Modify This Start --}}
-            <div class="my-2"></div>
-            {{-- Modify This End --}}
+
+            {{-- Reply Create Box --}}
+            @auth
+                <div class="reply reply-box p-3 ml-5 mt-2">
+                    <h6>Write your reply:</h6>
+                    <form action="{{ route('reply.store', ['comment' => $comment]) }}" method="post">
+                        @csrf
+                        <textarea class="form-control" name="reply" id="reply"></textarea>
+                        <button type="submit" class="btn btn-outline-primary mt-3">Reply</button>
+                    </form>
+                </div>
+            @endauth
 
             {{-- Reply Show Box --}}
-            <div class="reply reply-box p-3 ml-5">
-                <h6>Write your reply:</h6>
-                <textarea class="form-control" name="reply" id="reply"></textarea>
-                <button type="submit" class="btn btn-outline-primary mt-3">Reply</button>
-            </div>
 
             @foreach ($comment->replies()->orderBy('created_at', 'desc')->get() as $reply)
-                <div class="reply d-flex flex-row p-3 ml-5">
+                <div class="reply d-flex flex-row p-3 ml-5 mt-2">
                     <div class="mr-4">
                         <img class="rounded-circle" src="https://img.favpng.com/21/10/23/computer-icons-avatar-social-media-blog-font-awesome-png-favpng-jKXEv9rWhum7VbNKDbcELd6Di_t.jpg" alt="Profile Picture" width="64" height="64">
                     </div>

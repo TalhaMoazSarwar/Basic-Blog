@@ -37,6 +37,10 @@ Route::post('post/{post}/comment', [CommentController::class, 'store'])->name('c
 Route::post('comment/{comment}/like', [CommentController::class, 'like'])->name('comment.like');
 Route::post('comment/{comment}/dislike', [CommentController::class, 'dislike'])->name('comment.dislike');
 
+// Comment Reply Route
+
+Route::post('comment/{comment}/reply', [ReplyController::class, 'store'])->name('reply.store');
+
 // Comment Reply Like/Dislike Routes
 Route::post('reply/{reply}/like', [ReplyController::class, 'like'])->name('reply.like');
 Route::post('reply/{reply}/dislike', [ReplyController::class, 'dislike'])->name('reply.dislike');

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Like;
-use App\Models\Post;
 use App\Models\Reply;
 use Auth;
 use Illuminate\Http\Request;
@@ -16,18 +16,18 @@ class ReplyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Post $post)
+    public function store(Request $request, Comment $comment)
     {
         $request->validate([
-            'comment' => 'required',
+            'reply' => 'required',
         ]);
 
-        $post->comments()->create([
-            'text' => $request->get('comment'),
+        $comment->replies()->create([
+            'text' => $request->get('reply'),
             'user_id' => Auth::id(),
         ]);
 
-        return redirect()->route('post.show', ['post' => $post]);
+        return redirect()->route('post.show', ['post' => $comment->commentable]);
     }
 
     /**
