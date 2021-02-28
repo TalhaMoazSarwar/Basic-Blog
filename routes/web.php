@@ -32,14 +32,15 @@ Route::post('post/{post}/dislike', [PostController::class, 'dislike'])->name('po
 
 // Post Comment Routes
 Route::post('post/{post}/comment', [CommentController::class, 'store'])->name('comment.store');
+Route::patch('comment/{comment}', [CommentController::class, 'update'])->name('comment.update');
 
 // Post Comment Like/Dislike Routes
 Route::post('comment/{comment}/like', [CommentController::class, 'like'])->name('comment.like');
 Route::post('comment/{comment}/dislike', [CommentController::class, 'dislike'])->name('comment.dislike');
 
 // Comment Reply Route
-
 Route::post('comment/{comment}/reply', [ReplyController::class, 'store'])->name('reply.store');
+Route::patch('reply/{reply}', [ReplyController::class, 'update'])->name('reply.update');
 
 // Comment Reply Like/Dislike Routes
 Route::post('reply/{reply}/like', [ReplyController::class, 'like'])->name('reply.like');

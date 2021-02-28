@@ -22,12 +22,12 @@ class CommentController extends Controller
             'comment' => 'required',
         ]);
 
-        $post->comments()->create([
+        $comment = $post->comments()->create([
             'text' => $request->get('comment'),
             'user_id' => Auth::id(),
         ]);
 
-        return redirect()->route('post.show', ['post' => $post]);
+        return redirect()->route('post.show', ['post' => $post, '#comment-id-' . $comment->id]);
     }
 
     /**
@@ -39,7 +39,15 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        //
+        $request->validate([
+            'comment' => 'required',
+        ]);
+
+        $comment->update([
+            'text' => $request->get('comment')
+        ]);
+
+        return redirect()->route('post.show', ['post' => $comment->commentable, '#comment-id-' . $comment->id]);
     }
 
     /**

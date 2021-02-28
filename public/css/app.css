@@ -16155,7 +16155,9 @@ readers do not read off random characters that represent icons */
   font-size: 1rem;
 }
 
-.post-commentbox .comment .reply {
+.post-commentbox .comment .reply,
+.post-commentbox .comment .comment-edit-box,
+.post-commentbox .comment .reply-edit-box {
   display: none;
 }
 
@@ -16173,8 +16175,8 @@ readers do not read off random characters that represent icons */
   font-size: 0.9rem;
 }
 
-.comment-actionbox > a:hover,
-.reply-actionbox > a:hover {
+.comment-actionbox > a > span:hover,
+.reply-actionbox > a > span:hover {
   text-decoration: underline !important;
 }
 

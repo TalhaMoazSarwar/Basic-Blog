@@ -12,7 +12,7 @@ function is_liked_or_disliked(el1, el2) {
     return is_liked(el1) || is_disliked(el2);
 }
 
-function tggle_lioke(like, dislike, isPost) {
+function toggle_like(like, dislike) {
     if (is_liked(like)) {
         like.find('span').text('Like');
         dislike.find('span').text('Disliked');
@@ -136,8 +136,16 @@ $('.comment-actionbox').on('click', 'a', function(e) {
 
     } else if ( $(this).hasClass('comment-reply') ) {
 
-        $(this).closest('.comment').children('.reply-box').fadeToggle('slow');
+        $(this).toggleClass('text-primary');
+        let replyBox = $(this).closest('.comment').children('.reply-box');
+        replyBox.fadeToggle('slow');
+        replyBox.find('textarea').trigger('focus');
 
+    } else if ( $(this).hasClass('comment-edit') ) {
+
+        let parent = $(this).closest('.flex-row');
+        parent.children('.comment-content').hide();
+        parent.children('.comment-edit-box').fadeIn();
     }
 });
 
@@ -157,5 +165,24 @@ $('.reply-actionbox').on('click', 'a', function(e) {
         let like = $(this).prev();  
         do_like_dislike(like, dislike, 'reply', commentID, false);
 
+    } else if ( $(this).hasClass('reply-edit') ) {
+
+        let parent = $(this).closest('.flex-row');
+        parent.children('.reply-content').hide();
+        parent.children('.reply-edit-box').fadeIn();
     }
 });
+
+// Comment Edit Cancel Button Functionality
+
+$('.comment-edit-box-cancel').on('click', function(e) {
+    let parent = $(this).closest('.flex-row');
+    parent.children('.comment-edit-box').hide();
+    parent.children('.comment-content').fadeIn();
+})
+
+$('.reply-edit-box-cancel').on('click', function(e) {
+    let parent = $(this).closest('.flex-row');
+    parent.children('.reply-edit-box').hide();
+    parent.children('.reply-content').fadeIn();
+})

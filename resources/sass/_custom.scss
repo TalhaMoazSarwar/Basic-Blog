@@ -26,7 +26,9 @@
 
 // Comment Reply Box
 
-.post-commentbox .comment .reply {
+.post-commentbox .comment .reply,
+.post-commentbox .comment .comment-edit-box,
+.post-commentbox .comment .reply-edit-box {
     display: none;
 }
 
@@ -48,8 +50,8 @@
     font-size: 0.9rem;
 }
 
-.comment-actionbox > a:hover,
-.reply-actionbox > a:hover {
+.comment-actionbox > a > span:hover,
+.reply-actionbox > a > span:hover {
     text-decoration: underline !important;
 }
 

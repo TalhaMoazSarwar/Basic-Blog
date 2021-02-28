@@ -27,7 +27,7 @@ class ReplyController extends Controller
             'user_id' => Auth::id(),
         ]);
 
-        return redirect()->route('post.show', ['post' => $comment->commentable]);
+        return redirect()->route('post.show', ['post' => $comment->commentable, '#comment-id-' . $comment->id]);
     }
 
     /**
@@ -39,7 +39,15 @@ class ReplyController extends Controller
      */
     public function update(Request $request, Reply $reply)
     {
-        //
+        $request->validate([
+            'reply' => 'required',
+        ]);
+
+        $reply->update([
+            'text' => $request->get('reply')
+        ]);
+
+        return redirect()->route('post.show', ['post' => $reply->comment->commentable, '#reply-id-' . $reply->id]);
     }
 
     /**
