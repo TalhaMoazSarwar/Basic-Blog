@@ -1,92 +1,35 @@
 // Like/Dislike Supportive Functions
 
-function is_liked(el) {
-    return el.text().trim() == "Liked";
-}
-
-function is_disliked(el) {
-    return el.text().trim() == "Disliked";
-}
-
-function is_liked_or_disliked(el1, el2) {
-    return is_liked(el1) || is_disliked(el2);
-}
-
-function toggle_like(like, dislike) {
-    if (is_liked(like)) {
-        like.find('span').text('Like');
-        dislike.find('span').text('Disliked');
-    } else {
-        like.find('span').text('Liked');
-        dislike.find('span').text('Dislike');
+$.fn.extend({
+    toggleText: function (a, b) {
+        return this.text(this.text() == a ? b : a);
+    },
+    isLikedOrDisliked: function() {
+        return this.text() == 'Liked' || this.text() == 'Disliked';
+    },
+    replaceClass: function(a, b) {
+        this.removeClass(a);
+        this.addClass(b);
+        return this;
     }
-}
+});
 
 // Like/Dislike Global Function
 
 function do_like_dislike(like, dislike, model, likeableID, actionType) {
 
-    if ( is_liked_or_disliked(like, dislike) ) {
-        let liked = is_liked(like);
-        if ( liked == actionType ) {
-            if (actionType) {
-                if (model == 'post') {
-                    like.removeClass('btn-success');
-                    like.addClass('btn-outline-success');
-                } else {
-                    like.removeClass('text-primary');
-                }
-                like.find('span').text('Like');
-            } else {
-                if (model == 'post') {
-                    dislike.removeClass('btn-danger');
-                    dislike.addClass('btn-outline-danger');
-                } else {
-                    dislike.removeClass('text-primary');
-                }
-                dislike.find('span').text('Dislike');
-            }
-        } else {
-            if (model == 'post') {
-                if ( liked ) {
-                    like.removeClass('btn-success');
-                    like.addClass('btn-outline-success');
-                    dislike.addClass('btn-danger');
-                    dislike.removeClass('btn-outline-danger');
-                } else {
-                    like.addClass('btn-success');
-                    like.removeClass('btn-outline-success');
-                    dislike.removeClass('btn-danger');
-                    dislike.addClass('btn-outline-danger');
-                }
-            } else {
-                if ( liked ) {
-                    like.removeClass('text-primary');
-                    dislike.addClass('text-primary');
-                } else {
-                    like.addClass('text-primary');
-                    dislike.removeClass('text-primary');
-                }
-            }
-            toggle_like(like, dislike);
+    let likeText = like.find('span');
+    let dislikeText = dislike.find('span');
+
+    if (actionType) {
+        likeText.toggleText('Like', 'Liked');
+        if ( dislikeText.isLikedOrDisliked() ) {
+            dislikeText.text('Dislike');
         }
     } else {
-        if (actionType) {
-            if (model == 'post') {
-                like.addClass('btn-success');
-                like.removeClass('btn-outline-success');
-            } else {
-                like.addClass('text-primary');
-            }
-            like.find('span').text('Liked');
-        } else {
-            if (model == 'post') {
-                dislike.addClass('btn-danger');
-                dislike.removeClass('btn-outline-danger');
-            } else {
-                dislike.addClass('text-primary');
-            }
-            dislike.find('span').text('Disliked');
+        dislikeText.toggleText('Dislike', 'Disliked');
+        if ( likeText.isLikedOrDisliked() ) {
+            likeText.text('Like');
         }
     }
 
@@ -96,7 +39,7 @@ function do_like_dislike(like, dislike, model, likeableID, actionType) {
         })
         .catch(function (error) {
             console.error(error);
-        })
+        });
 }
 
 // Post Like/Dislike Functionality
@@ -107,12 +50,20 @@ $('.post-likebox').on('click', 'button', function(e) {
 
         let like = $(this);
         let dislike = $(this).next();
+
+        like.toggleClass('btn-success btn-outline-success');
+        dislike.replaceClass('btn-danger', 'btn-outline-danger');
+
         do_like_dislike(like, dislike, 'post', postID, true);
 
     } else if ( $(this).hasClass('post-dislike') ) {
 
         let dislike = $(this);
-        let like = $(this).prev();  
+        let like = $(this).prev();
+
+        dislike.toggleClass('btn-danger btn-outline-danger');
+        like.replaceClass('btn-success', 'btn-outline-success');
+
         do_like_dislike(like, dislike, 'post', postID, false);
 
     }
@@ -126,17 +77,26 @@ $('.comment-actionbox').on('click', 'a', function(e) {
 
         let like = $(this);
         let dislike = $(this).next();
+
+        like.toggleClass('text-success');
+        dislike.removeClass('text-danger');
+
         do_like_dislike(like, dislike, 'comment', commentID, true);
 
     } else if ( $(this).hasClass('comment-dislike') ) {
 
         let dislike = $(this);
-        let like = $(this).prev();  
+        let like = $(this).prev();
+
+        dislike.toggleClass('text-danger');
+        like.removeClass('text-success');
+
         do_like_dislike(like, dislike, 'comment', commentID, false);
 
     } else if ( $(this).hasClass('comment-reply') ) {
 
         $(this).toggleClass('text-primary');
+
         let replyBox = $(this).closest('.comment').children('.reply-box');
         replyBox.fadeToggle('slow');
         replyBox.find('textarea').trigger('focus');
@@ -157,12 +117,20 @@ $('.reply-actionbox').on('click', 'a', function(e) {
 
         let like = $(this);
         let dislike = $(this).next();
+
+        like.toggleClass('text-success');
+        dislike.removeClass('text-danger');
+
         do_like_dislike(like, dislike, 'reply', commentID, true);
 
     } else if ( $(this).hasClass('reply-dislike') ) {
 
         let dislike = $(this);
         let like = $(this).prev();  
+
+        dislike.toggleClass('text-danger');
+        like.removeClass('text-success');
+
         do_like_dislike(like, dislike, 'reply', commentID, false);
 
     } else if ( $(this).hasClass('reply-edit') ) {

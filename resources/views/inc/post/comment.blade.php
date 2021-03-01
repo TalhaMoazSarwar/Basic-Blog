@@ -35,10 +35,10 @@
                     <span class="d-block mt-1">{{ $comment->text }}</span>
                     @auth
                         <div class="comment-actionbox small mt-1" data-comment-id="{{ $comment->id }}">
-                            <a class="comment-like {{ is_liked_or_disliked($comment) === 1 ? 'text-primary' : '' }}">
+                            <a class="comment-like {{ is_liked_or_disliked($comment) === 1 ? 'text-success' : '' }}">
                                 <i class="far fa-thumbs-up"></i> <span>{{ is_liked_or_disliked($comment) === 1 ? 'Liked' : 'Like' }}</span>
                             </a>
-                            <a class="comment-dislike ml-3 {{ is_liked_or_disliked($comment) === 0 ? 'text-primary' : '' }}">
+                            <a class="comment-dislike ml-3 {{ is_liked_or_disliked($comment) === 0 ? 'text-danger' : '' }}">
                                 <i class="far fa-thumbs-down"></i> <span>{{ is_liked_or_disliked($comment) === 0 ? 'Disliked' : 'Dislike' }}</span>
                             </a>
                             <a class="comment-reply ml-3"><i class="fas fa-reply"></i> <span>Reply</span></a>
@@ -82,10 +82,10 @@
                         <span class="d-block mt-1">{{ $reply->text }}</span>
                         @auth
                             <div class="reply-actionbox small mt-1" data-reply-id="{{ $reply->id }}">
-                                <a class="reply-like {{ is_liked_or_disliked($reply) === 1 ? 'text-primary' : '' }}">
+                                <a class="reply-like {{ is_liked_or_disliked($reply) === 1 ? 'text-success' : '' }}">
                                     <i class="far fa-thumbs-up"></i> <span>{{ is_liked_or_disliked($reply) === 1 ? 'Liked' : 'Like' }}</span>
                                 </a>
-                                <a class="reply-dislike ml-3 {{ is_liked_or_disliked($reply) === 0 ? 'text-primary' : '' }}">
+                                <a class="reply-dislike ml-3 {{ is_liked_or_disliked($reply) === 0 ? 'text-danger' : '' }}">
                                     <i class="far fa-thumbs-down"></i> <span>{{ is_liked_or_disliked($reply) === 0 ? 'Disliked' : 'Dislike' }}</span>
                                 </a>
                                 <a class="reply-edit ml-3"><i class="fas fa-edit"></i> <span>Edit</span></a>
