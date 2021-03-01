@@ -106,6 +106,12 @@ $('.comment-actionbox').on('click', 'a', function(e) {
         let parent = $(this).closest('.flex-row');
         parent.children('.comment-content').hide();
         parent.children('.comment-edit-box').fadeIn();
+
+    } else if ( $(this).hasClass('comment-delete') ) {
+
+        let form = $(this).parent();
+        form.trigger('submit');
+
     }
 });
 
@@ -138,6 +144,12 @@ $('.reply-actionbox').on('click', 'a', function(e) {
         let parent = $(this).closest('.flex-row');
         parent.children('.reply-content').hide();
         parent.children('.reply-edit-box').fadeIn();
+
+    } else if ( $(this).hasClass('reply-delete') ) {
+
+        let form = $(this).parent();
+        form.trigger('submit');
+        
     }
 });
 

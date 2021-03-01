@@ -1,6 +1,6 @@
 @php
-    function is_liked_or_disliked($comment) {
-        $like = $comment->likes()->where('user_id', Auth::id())->first();
+    function is_liked_or_disliked($model) {
+        $like = $model->likes()->where('user_id', Auth::id())->first();
         if (!is_null($like)) {
             return $like->type;
         }
@@ -42,7 +42,14 @@
                                 <i class="far fa-thumbs-down"></i> <span>{{ is_liked_or_disliked($comment) === 0 ? 'Disliked' : 'Dislike' }}</span>
                             </a>
                             <a class="comment-reply ml-3"><i class="fas fa-reply"></i> <span>Reply</span></a>
-                            <a class="comment-edit ml-3"><i class="fas fa-edit"></i> <span>Edit</span></a>
+                            @if ($comment->user_id == Auth::id())
+                                <a class="comment-edit ml-3"><i class="fas fa-edit"></i> <span>Edit</span></a>
+                                <form class="d-inline" action="{{ route('comment.destroy', ['comment' => $comment]) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <a class="comment-delete ml-3"><i class="fas fa-trash-alt"></i> <span>Delete</span></a>
+                                </form>
+                            @endif
                         </div>
                     @endauth
                 </div>
@@ -88,7 +95,14 @@
                                 <a class="reply-dislike ml-3 {{ is_liked_or_disliked($reply) === 0 ? 'text-danger' : '' }}">
                                     <i class="far fa-thumbs-down"></i> <span>{{ is_liked_or_disliked($reply) === 0 ? 'Disliked' : 'Dislike' }}</span>
                                 </a>
-                                <a class="reply-edit ml-3"><i class="fas fa-edit"></i> <span>Edit</span></a>
+                                @if ($reply->user_id == Auth::id())
+                                    <a class="reply-edit ml-3"><i class="fas fa-edit"></i> <span>Edit</span></a>
+                                    <form class="d-inline" action="{{ route('reply.destroy', ['reply' => $reply]) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <a class="reply-delete ml-3"><i class="fas fa-trash-alt"></i> <span>Delete</span></a>
+                                    </form>
+                                @endif
                             </div>
                         @endauth
                     </div>

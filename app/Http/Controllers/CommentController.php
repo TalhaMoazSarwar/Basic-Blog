@@ -58,7 +58,9 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        $comment->delete();
+        $comment->replies()->delete();
+        return redirect()->route('post.show', ['post' => $comment->commentable])->with('success', 'Comment Successfully Deleted');
     }
 
     public function like(Comment $comment) {

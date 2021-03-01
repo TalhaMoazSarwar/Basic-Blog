@@ -16167,16 +16167,16 @@ readers do not read off random characters that represent icons */
   margin-bottom: 10px;
 }
 
-.comment-actionbox > a,
-.reply-actionbox > a {
+.comment-actionbox a,
+.reply-actionbox a {
   cursor: pointer;
   text-decoration: none;
   color: inherit;
   font-size: 0.9rem;
 }
 
-.comment-actionbox > a > span:hover,
-.reply-actionbox > a > span:hover {
+.comment-actionbox a > span:hover,
+.reply-actionbox a > span:hover {
   text-decoration: underline !important;
 }
 

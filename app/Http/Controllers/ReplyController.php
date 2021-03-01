@@ -58,7 +58,8 @@ class ReplyController extends Controller
      */
     public function destroy(Reply $reply)
     {
-        //
+        $reply->delete();
+        return redirect()->route('post.show', ['post' => $reply->comment->commentable])->with('success', 'Reply Successfully Deleted');
     }
 
     public function like(Reply $reply) {
