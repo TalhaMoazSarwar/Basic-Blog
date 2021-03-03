@@ -8,7 +8,7 @@
 @endphp
 {{-- Main Comment Box --}}
 <section class="post-commentbox">
-    @if ( auth()->check() || $comments->isNotEmpty() )
+    @if ( auth()->check() || $post->comments->isNotEmpty() )
         <h1 class="mb-5 font-weight-bold">Comments</h1>
     @endif
     {{-- Comment Create Box --}}
@@ -23,11 +23,11 @@
         </div>
     @endauth
     {{-- Comment Show Box --}}
-    @foreach ($comments as $comment)
+    @foreach ($post->comments as $comment)
         <div id="comment-id-{{$comment->id}}" class="comment d-flex flex-column p-4">
             <div class="d-flex flex-row">
                 <div class="mr-4">
-                    <img class="rounded-circle" src="https://img.favpng.com/21/10/23/computer-icons-avatar-social-media-blog-font-awesome-png-favpng-jKXEv9rWhum7VbNKDbcELd6Di_t.jpg" alt="Profile Picture" width="64" height="64">
+                    <img class="rounded-circle" src="/storage/images/profile/{{ $comment->user->profile_image }}" alt="Profile Picture" width="64" height="64">
                 </div>
                 <div class="comment-content text-justify text-secondary">
                     <h5 class="font-weight-bold d-inline">{{ $comment->user->name }}</h5>
