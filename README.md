@@ -37,8 +37,8 @@ Basic Blog is based on Laravel Framework. I am working on this project for learn
 
 ## Features
 - Create, Update, Delete Post
-- Create Comments on Post
-- Like/Dislike Comment
-- Like/Dislike Comment's Reply
+- Create, Update, Delete Comments on Post
+- Create, Update, Delete Replies on Comments
+- Like/Dislike Post, Comment, Reply
 
 ##### Made with ❤ in Pakistan

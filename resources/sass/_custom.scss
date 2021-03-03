@@ -32,6 +32,10 @@
     display: none;
 }
 
+.post-commentbox .comment .reply:last-child {
+    margin-bottom: 0px;
+}
+
 // Comment/Reply Border
 
 .post-commentbox .comment,

@@ -16161,6 +16161,10 @@ readers do not read off random characters that represent icons */
   display: none;
 }
 
+.post-commentbox .comment .reply:last-child {
+  margin-bottom: 0px;
+}
+
 .post-commentbox .comment,
 .post-commentbox .reply {
   border: 1px solid rgba(0, 0, 0, 0.125);
