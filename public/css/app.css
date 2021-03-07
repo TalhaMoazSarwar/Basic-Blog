@@ -16184,6 +16184,10 @@ readers do not read off random characters that represent icons */
   text-decoration: underline !important;
 }
 
-.post-author-active {
+.little-bold {
   text-shadow: 0px 0px 1px #5e666d73;
+}
+
+.font-underline {
+  text-decoration: underline;
 }

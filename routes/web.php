@@ -4,6 +4,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReplyController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,3 +48,6 @@ Route::delete('reply/{reply}', [ReplyController::class, 'destroy'])->name('reply
 // Comment Reply Like/Dislike Routes
 Route::post('reply/{reply}/like', [ReplyController::class, 'like'])->name('reply.like');
 Route::post('reply/{reply}/dislike', [ReplyController::class, 'dislike'])->name('reply.dislike');
+
+// User Routes
+Route::get('user/{user}', [UserController::class, 'show'])->name('user.show');

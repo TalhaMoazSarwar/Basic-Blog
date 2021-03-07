@@ -1,11 +1,3 @@
-@php
-    function is_liked_or_disliked($model) {
-        $like = $model->likes()->where('user_id', Auth::id())->first();
-        if (!is_null($like)) {
-            return $like->type;
-        }
-    }
-@endphp
 {{-- Main Comment Box --}}
 <section class="post-commentbox">
     @if ( auth()->check() || $post->comments->isNotEmpty() )
@@ -81,7 +73,7 @@
             @foreach ($comment->replies()->orderBy('created_at', 'desc')->get() as $reply)
                 <div id="reply-id-{{$reply->id}}" class="reply d-flex flex-row p-3 ml-5 mt-2">
                     <div class="mr-4">
-                        <img class="rounded-circle" src="https://img.favpng.com/21/10/23/computer-icons-avatar-social-media-blog-font-awesome-png-favpng-jKXEv9rWhum7VbNKDbcELd6Di_t.jpg" alt="Profile Picture" width="64" height="64">
+                        <img class="rounded-circle" src="/storage/images/profile/{{ $reply->user->profile_image }}" alt="Profile Picture" width="64" height="64">
                     </div>
                     <div class="reply-content text-justify text-secondary">
                         <h5 class="font-weight-bold d-inline">{{ $reply->user->name }}</h5>
