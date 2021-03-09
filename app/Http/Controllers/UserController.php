@@ -60,11 +60,7 @@ class UserController extends Controller
         'likes as dislikes_count' => function ($query) {
             $query->where('type', 0);
         },
-        ])->load(['posts', 'likes', 'comments', 'replies']);
-        $posts = $user->posts;
-        $likes = $user->likes;
-        $comments = $user->comments;
-        $replies = $user->replies;
+        ])->load(['posts.likes', 'posts.comments']);
         return view('user.show', compact('user'));
     }
 

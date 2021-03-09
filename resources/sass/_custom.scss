@@ -47,15 +47,17 @@
 // Comment/Reply Action Box
 
 .comment-actionbox a,
-.reply-actionbox a {
+.reply-actionbox a,
+.post-actionbox a {
     cursor: pointer;
     text-decoration: none;
     color: inherit;
     font-size: 0.9rem;
 }
 
-.comment-actionbox a > span:hover,
-.reply-actionbox a > span:hover {
+.comment-actionbox a > span.action-text:hover,
+.reply-actionbox a > span.action-text:hover,
+.post-actionbox a > span.action-text:hover {
     text-decoration: underline !important;
 }
 

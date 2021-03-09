@@ -1,5 +1,5 @@
 {{-- Main Comment Box --}}
-<section class="post-commentbox">
+<section class="post-commentbox" id="post-commentbox">
     @if ( auth()->check() || $post->comments->isNotEmpty() )
         <h1 class="mb-5 font-weight-bold">Comments</h1>
     @endif
@@ -28,18 +28,24 @@
                     @auth
                         <div class="comment-actionbox small mt-1" data-comment-id="{{ $comment->id }}">
                             <a class="comment-like {{ is_liked_or_disliked($comment) === 1 ? 'text-success' : '' }}">
-                                <i class="far fa-thumbs-up"></i> <span>{{ is_liked_or_disliked($comment) === 1 ? 'Liked' : 'Like' }}</span>
+                                <i class="far fa-thumbs-up"></i>
+                                <span class="action-text">{{ is_liked_or_disliked($comment) === 1 ? 'Liked' : 'Like' }}</span>
+                                (<span class="action-count">{{ $comment->likes->where('type', 1)->count() }}</span>)
                             </a>
                             <a class="comment-dislike ml-3 {{ is_liked_or_disliked($comment) === 0 ? 'text-danger' : '' }}">
-                                <i class="far fa-thumbs-down"></i> <span>{{ is_liked_or_disliked($comment) === 0 ? 'Disliked' : 'Dislike' }}</span>
+                                <i class="far fa-thumbs-down"></i>
+                                <span class="action-text">{{ is_liked_or_disliked($comment) === 0 ? 'Disliked' : 'Dislike' }}</span>
+                                (<span class="action-count">{{ $comment->likes->where('type', 0)->count() }}</span>)
                             </a>
                             <a class="comment-reply ml-3"><i class="fas fa-reply"></i> <span>Reply</span></a>
                             @if ($comment->user_id == Auth::id())
-                                <a class="comment-edit ml-3"><i class="fas fa-edit"></i> <span>Edit</span></a>
+                                <a class="comment-edit ml-3"><i class="fas fa-edit"></i>
+                                <span class="action-text">Edit</span></a>
                                 <form class="d-inline" action="{{ route('comment.destroy', ['comment' => $comment]) }}" method="post">
                                     @csrf
                                     @method('delete')
-                                    <a class="comment-delete ml-3"><i class="fas fa-trash-alt"></i> <span>Delete</span></a>
+                                    <a class="comment-delete ml-3"><i class="fas fa-trash-alt"></i>
+                                    <span class="action-text">Delete</span></a>
                                 </form>
                             @endif
                         </div>
@@ -82,17 +88,23 @@
                         @auth
                             <div class="reply-actionbox small mt-1" data-reply-id="{{ $reply->id }}">
                                 <a class="reply-like {{ is_liked_or_disliked($reply) === 1 ? 'text-success' : '' }}">
-                                    <i class="far fa-thumbs-up"></i> <span>{{ is_liked_or_disliked($reply) === 1 ? 'Liked' : 'Like' }}</span>
+                                    <i class="far fa-thumbs-up"></i>
+                                    <span class="action-text">{{ is_liked_or_disliked($reply) === 1 ? 'Liked' : 'Like' }}</span>
+                                    (<span class="action-count">{{ $reply->likes->where('type', 1)->count() }}</span>)
                                 </a>
                                 <a class="reply-dislike ml-3 {{ is_liked_or_disliked($reply) === 0 ? 'text-danger' : '' }}">
-                                    <i class="far fa-thumbs-down"></i> <span>{{ is_liked_or_disliked($reply) === 0 ? 'Disliked' : 'Dislike' }}</span>
+                                    <i class="far fa-thumbs-down"></i>
+                                    <span class="action-text">{{ is_liked_or_disliked($reply) === 0 ? 'Disliked' : 'Dislike' }}</span>
+                                    (<span class="action-count">{{ $reply->likes->where('type', 0)->count() }}</span>)
                                 </a>
                                 @if ($reply->user_id == Auth::id())
-                                    <a class="reply-edit ml-3"><i class="fas fa-edit"></i> <span>Edit</span></a>
+                                    <a class="reply-edit ml-3"><i class="fas fa-edit"></i>
+                                    <span class="action-text">Edit</span></a>
                                     <form class="d-inline" action="{{ route('reply.destroy', ['reply' => $reply]) }}" method="post">
                                         @csrf
                                         @method('delete')
-                                        <a class="reply-delete ml-3"><i class="fas fa-trash-alt"></i> <span>Delete</span></a>
+                                        <a class="reply-delete ml-3"><i class="fas fa-trash-alt"></i>
+                                        <span class="action-text">Delete</span></a>
                                     </form>
                                 @endif
                             </div>

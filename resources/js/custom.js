@@ -11,6 +11,12 @@ $.fn.extend({
         this.removeClass(a);
         this.addClass(b);
         return this;
+    },
+    increaseActionCount: function() {
+        return this.text( parseInt(this.text()) + 1 );
+    },
+    decreaseActionCount: function() {
+        return this.text( parseInt(this.text()) - 1 );
     }
 });
 
@@ -18,18 +24,35 @@ $.fn.extend({
 
 function do_like_dislike(like, dislike, model, likeableID, actionType) {
 
-    let likeText = like.find('span');
-    let dislikeText = dislike.find('span');
+    let likeText = like.find('span.action-text');
+    let dislikeText = dislike.find('span.action-text');
+
+    let likeCount = like.find('span.action-count');
+    let dislikeCount = dislike.find('span.action-count');
 
     if (actionType) {
         likeText.toggleText('Like', 'Liked');
         if ( dislikeText.isLikedOrDisliked() ) {
             dislikeText.text('Dislike');
+            dislikeCount.decreaseActionCount();
+        }
+
+        if ( likeText.text() == 'Liked' ) {
+            likeCount.increaseActionCount();
+        } else {
+            likeCount.decreaseActionCount();
         }
     } else {
         dislikeText.toggleText('Dislike', 'Disliked');
         if ( likeText.isLikedOrDisliked() ) {
             likeText.text('Like');
+            likeCount.decreaseActionCount();
+        }
+
+        if ( dislikeText.text() == 'Disliked' ) {
+            dislikeCount.increaseActionCount();
+        } else {
+            dislikeCount.decreaseActionCount();
         }
     }
 
@@ -150,6 +173,37 @@ $('.reply-actionbox').on('click', 'a', function(e) {
         let form = $(this).parent();
         form.trigger('submit');
         
+    }
+});
+
+// User Post Like/Dislike Functionality
+
+$('.post-actionbox').on('click', 'a', function(e) {
+    let postID = $(this).parent().attr('data-post-id');
+    if ( $(this).hasClass('user-post-like') ) {
+
+        let like = $(this);
+        let dislike = $(this).next();
+
+        like.toggleClass('text-success');
+        dislike.removeClass('text-danger');
+
+        do_like_dislike(like, dislike, 'post', postID, true);
+
+    } else if ( $(this).hasClass('user-post-dislike') ) {
+
+        let dislike = $(this);
+        let like = $(this).prev();  
+
+        dislike.toggleClass('text-danger');
+        like.removeClass('text-success');
+
+        do_like_dislike(like, dislike, 'post', postID, false);
+
+    } else if ( $(this).hasClass('user-post-comment') ) {
+
+        
+
     }
 });
 
