@@ -52,33 +52,36 @@
 
     <div class="recent_posts card mt-2">
         <div class="card-body">
-            <h2 class="font-weight-bold text-secondary font-underline">Recent Posts</h2>
-            <div class="d-flex flex-column">
-                @foreach ($user->posts as $post)
+            <h2 class="text-secondary font-underline">Recent Posts</h2>
+            <div class="d-flex flex-column mt-3">
+                {{ $posts = $user->posts()->paginate(5) }}
+                @foreach ($posts as $post)
                     <div class="border p-3 my-2 text-justify text-secondary">
-                        <h5 class="font-weight-bold d-inline"><a class="text-reset text-decoration-none" href="{{ route('post.show', ['post' => $post]) }}">{{ $post->title }}</a></h5>
+                        <h5 class="d-inline"><a class="text-reset text-decoration-none"
+                            href="{{ route('post.show', ['post' => $post]) }}">{{ $post->title }}</a></h5>
                         <small class="text-muted"> ({{ $post->age }})</small>
                         @auth
                             <div class="post-actionbox mt-2" data-post-id="{{ $post->id }}">
                                 <a class="user-post-like {{ is_liked_or_disliked($post) === 1 ? 'text-success' : '' }}">
                                     <i class="far fa-thumbs-up"></i>
                                     <span class="action-text">{{ is_liked_or_disliked($post) === 1 ? 'Liked' : 'Like' }}</span>
-                                    (<span class="action-count">{{ $post->likes->where('type', 1)->count() }}</span>)
+                                    <span class="action-count">{{ $post->likes->where('type', 1)->count() }}</span>
                                 </a>
                                 <a class="user-post-dislike ml-3 {{ is_liked_or_disliked($post) === 0 ? 'text-danger' : '' }}">
                                     <i class="far fa-thumbs-down"></i>
                                     <span class="action-text">{{ is_liked_or_disliked($post) === 0 ? 'Disliked' : 'Dislike' }}</span>
-                                    (<span class="action-count">{{ $post->likes->where('type', 0)->count() }}</span>)
+                                    <span class="action-count">{{ $post->likes->where('type', 0)->count() }}</span>
                                 </a>
                                 <a href="{{ route('post.show', ['post' => $post, '#post-commentbox']) }}" class="user-post-comment ml-3">
                                     <i class="far fa-thumbs-down"></i>
                                     <span class="action-text">Comment</span>
-                                    (<span class="action-count">{{ $post->comments->count() }}</span>)
+                                    <span class="action-count">{{ $post->comments->count() }}</span>
                                 </a>
                             </div>
                         @endauth
                     </div>
                 @endforeach
+                {{ $posts->links() }}
             </div>
         </div>
     </div>

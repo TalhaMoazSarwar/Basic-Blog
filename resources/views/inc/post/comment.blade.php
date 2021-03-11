@@ -30,12 +30,12 @@
                             <a class="comment-like {{ is_liked_or_disliked($comment) === 1 ? 'text-success' : '' }}">
                                 <i class="far fa-thumbs-up"></i>
                                 <span class="action-text">{{ is_liked_or_disliked($comment) === 1 ? 'Liked' : 'Like' }}</span>
-                                (<span class="action-count">{{ $comment->likes->where('type', 1)->count() }}</span>)
+                                <span class="action-count">{{ $comment->likes->where('type', 1)->count() }}</span>
                             </a>
                             <a class="comment-dislike ml-3 {{ is_liked_or_disliked($comment) === 0 ? 'text-danger' : '' }}">
                                 <i class="far fa-thumbs-down"></i>
                                 <span class="action-text">{{ is_liked_or_disliked($comment) === 0 ? 'Disliked' : 'Dislike' }}</span>
-                                (<span class="action-count">{{ $comment->likes->where('type', 0)->count() }}</span>)
+                                <span class="action-count">{{ $comment->likes->where('type', 0)->count() }}</span>
                             </a>
                             <a class="comment-reply ml-3"><i class="fas fa-reply"></i> <span>Reply</span></a>
                             @if ($comment->user_id == Auth::id())
@@ -90,12 +90,12 @@
                                 <a class="reply-like {{ is_liked_or_disliked($reply) === 1 ? 'text-success' : '' }}">
                                     <i class="far fa-thumbs-up"></i>
                                     <span class="action-text">{{ is_liked_or_disliked($reply) === 1 ? 'Liked' : 'Like' }}</span>
-                                    (<span class="action-count">{{ $reply->likes->where('type', 1)->count() }}</span>)
+                                    <span class="action-count">{{ $reply->likes->where('type', 1)->count() }}</span>
                                 </a>
                                 <a class="reply-dislike ml-3 {{ is_liked_or_disliked($reply) === 0 ? 'text-danger' : '' }}">
                                     <i class="far fa-thumbs-down"></i>
                                     <span class="action-text">{{ is_liked_or_disliked($reply) === 0 ? 'Disliked' : 'Dislike' }}</span>
-                                    (<span class="action-count">{{ $reply->likes->where('type', 0)->count() }}</span>)
+                                    <span class="action-count">{{ $reply->likes->where('type', 0)->count() }}</span>
                                 </a>
                                 @if ($reply->user_id == Auth::id())
                                     <a class="reply-edit ml-3"><i class="fas fa-edit"></i>
